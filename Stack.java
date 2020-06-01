@@ -4,6 +4,8 @@ public class Stack {
     private int top=-1;
 	public void push(int element) {
         storage[++top] = element;
+        //Check for GitHUB
+        int i=0;
     }
 	public void pop() {
         if (top!=-1) top--;
