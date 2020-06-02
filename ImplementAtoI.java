@@ -6,7 +6,7 @@ public class ImplementAtoI {
         boolean first_non_whitespace_character = false;
         int count_of_integers=0;
         boolean negative_number = false;
-        boolean from_now_on_only_numbers = false;
+        //boolean from_now_on_only_numbers = false;
         for(var character : number.toCharArray()){
             if(character != ' '){
                 first_non_whitespace_character = true;;
@@ -18,7 +18,7 @@ public class ImplementAtoI {
             }
             else if(character == '-'){
                 negative_number = true;
-                from_now_on_only_numbers = true;
+                //from_now_on_only_numbers = true;
             }
             else break;
          }

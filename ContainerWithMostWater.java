@@ -1,7 +1,8 @@
 public class ContainerWithMostWater {
     public static void main(String[] args) {
         int[] container = {1,8,6,2,5,4,8,3,7};
-        int start=0,end=container.length-1;int count=end+1;
+        int start=0,end=container.length-1;
+        //int count=end+1;
          int smallest_wall;
          int highest_capacity=0;int calculate;
     //     while(start<count){
