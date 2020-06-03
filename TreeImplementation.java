@@ -105,5 +105,21 @@ public class TreeImplementation {
         PreOrderTraversal(root.left);
         PreOrderTraversal(root.right);
     }
-
+    public void NoRecursion_InOrderTraversal(){
+        NoRecursion_InOrderTraversal(root);
+    }
+    private void NoRecursion_InOrderTraversal(Node root) {
+        while(root!=null){
+            var temp = root;
+            while(temp.left != null){
+                temp = temp.left;
+            }
+            System.out.println(temp.data);
+            while(temp.right != null){
+                temp = temp.right;
+            }
+            System.out.println(temp.data);
+            root = root.right;
+        }
+    }
 }
