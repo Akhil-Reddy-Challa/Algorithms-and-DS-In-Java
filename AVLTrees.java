@@ -46,13 +46,13 @@ public class AVLTrees {
 	public void insertWithRecursion(int data) {
         root = insertWithRecursion(root,data);
     }
-    private AVLNode insertWithRecursion(AVLNode temp_root, int data) {
-        if(temp_root == null) 
+    private AVLNode insertWithRecursion(AVLNode root, int data) {
+        if(root == null) 
             return new AVLNode(data);
-        if(data > temp_root.data)
-            root.rightChild = insertWithRecursion(temp_root.rightChild, data);
+        if(data > root.data)
+            root.rightChild = insertWithRecursion(root.rightChild, data);
         else if(data < root.data)
-            root.leftChild = insertWithRecursion(temp_root.leftChild, data);
+            root.leftChild = insertWithRecursion(root.leftChild, data);
         return root;
     }
 

@@ -5,6 +5,7 @@ public class ProgramForAVLTrees {
         avl.insertWithRecursion(12);
         avl.insertWithRecursion(2);
         avl.insertWithRecursion(20);
+        avl.insertWithRecursion(1);
         avl.displayInorder();
         ///Implement Height checker feature
         // Introduce new Integer height in AVLNode class and store height
