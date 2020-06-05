@@ -29,20 +29,11 @@ public class AVLTrees {
         else if(data < root.data)
             root.leftChild = insertWithRecursion(root.leftChild, data);
         
-        root.height = Math.max(GetLeftHeight(root),GetRightHeight(root)) + 1;
+        root.height = Math.max(height(root.leftChild),height(root.rightChild)) + 1;
         return root;
     }
 
-    private int GetRightHeight(AVLNode root) {
-        if(root.rightChild == null)
-            return 0;
-        else return root.rightChild.height;
+    private int height(AVLNode root) {
+        return root == null ? 0: root.height;
     }
-
-    private int GetLeftHeight(AVLNode root) {
-        if(root.leftChild == null)
-            return 0;
-        else return root.leftChild.height;
-    }
-
 }
