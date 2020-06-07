@@ -1,6 +1,6 @@
-public class Trees {
+public class BinarySearchTree {
     public static void main(String[] args) {
-        var tree = new TreeImplementation();
+        var tree = new BSTTreeImplementation();
         tree.insert(20);
         tree.insert(10);
         tree.insert(30);
@@ -12,7 +12,7 @@ public class Trees {
         //System.out.println(tree.checkIfTreeIsBST());
         //tree.KthNodeFromRoot(1);
         //tree.PreOrderTraversal();
-        tree.NoRecursion_InOrderTraversal();
+        //tree.NoRecursion_InOrderTraversal();
 
     }
 }

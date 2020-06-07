@@ -1,4 +1,4 @@
-public class TreeImplementation {
+public class BSTTreeImplementation {
     private class Node {
         private int data;
         private Node left;
