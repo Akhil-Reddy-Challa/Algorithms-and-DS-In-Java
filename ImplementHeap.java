@@ -1,3 +1,5 @@
+import java.util.Scanner;
+
 public class ImplementHeap {
     
     int[] values = new int[100];
@@ -43,33 +45,33 @@ public class ImplementHeap {
             return;
         }
         //Now go to left child
-        if(leftChild(index)<counter)
-            findElementIndex(value_to_find, leftChild(index));
+        if(leftChildIndex(index)<counter)
+            findElementIndex(value_to_find, leftChildIndex(index));
         //Now go to right child
-        if(rightChild(index)<counter)
-            findElementIndex(value_to_find, rightChild(index));
+        if(rightChildIndex(index)<counter)
+            findElementIndex(value_to_find, rightChildIndex(index));
     }
 
-    private int rightChild(int index) {
+    private int rightChildIndex(int index) {
         return 2*index + 2;
     }
 
-    private int leftChild(int index) {
+    private int leftChildIndex(int index) {
         return 2*index + 1;
     }
 
 	public void remove() {
-        /* Goal: Removing the root node and balance the Heap
+        /* Goal: Removing the root(Highest Integer) node and make 2nd Highest int as the root
         1) First Pop the last element and place it as Root
         2) Then write a logic to check if heap is balanced or not
         */
         if(counter == 0) //If heap is empty
-            throw new IllegalMonitorStateException();
+            throw new IllegalStateException();
         //Now replace the root with last element
         values[0] = values[--counter];
         //Now check if the childrens are balanced
         int index =0;
-        while(index<counter && !ifParentIsValid(index)){
+        while( index < counter && ifParentIsValid(index)){
             //Swapping time
             //We now know that some child is greater than root
             int largerChildIndex = getLargerChildIndex(index);
@@ -81,14 +83,41 @@ public class ImplementHeap {
 	}
 
     private int getLargerChildIndex(int index) {
-        return values[leftChild(index)] > values[rightChild(index)] ?
-                leftChild(index) :
-                rightChild(index);
+        int highIndex = counter;
+        if( hasLeftChild(index) && values[leftChildIndex(index)] > values[index] )
+            highIndex = leftChildIndex(index);//Ww are not returning because right child might be bigger
+        if(hasRightChild(index) && values[rightChildIndex(index)] > values[leftChildIndex(index)] && values[rightChildIndex(index)] > values[index] )
+            return rightChildIndex(index);//Because we compared right child value with left value
+        return highIndex;//To make the while loop stop
     }
 
     private boolean ifParentIsValid(int index) {
-        return values[leftChild(index)] <= values[index] &&
-                values[rightChild(index)] <= values[index];
+        //check if this node has left child
+        if(!hasLeftChild(index))
+            return false;//Because insertion happens from left to right in HEAP
+        //If above not true
+        if( values[leftChildIndex(index)] >= values[index] ) return true;
+        //Above says that left child is not greater than root
+        
+        //Now check if right is great or not
+        if(hasRightChild(index) && values[rightChildIndex(index)] >= values[index])
+             return false;
+        
+        /* At this point either 
+        1) right,left child are lesser than root
+        or
+        2) no right child
+        */
+        return true;
+        
+    }
+
+    private boolean hasRightChild(int index) {
+        return (rightChildIndex(index) < counter) ? true : false;
+    }
+
+    private boolean hasLeftChild(int index) {
+        return (leftChildIndex(index) < counter) ? true : false;
     }
 
 

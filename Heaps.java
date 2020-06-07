@@ -8,8 +8,13 @@ public class Heaps {
         heap.insert(22);
         heap.insert(7);
         heap.insert(8);
-        heap.displayArray();
-        heap.findElementIndex(8);
+
+        heap.remove();
+        heap.remove();
+        heap.remove();
+        heap.remove();
+        heap.remove();
+        heap.remove();
         heap.remove();
         heap.displayArray();
     }
