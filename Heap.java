@@ -1,6 +1,12 @@
-import java.util.Scanner;
-
-public class ImplementHeap {
+/*
+To use this Heap
+Create an Heap object in a java file
+Usable/Public methods:
+1) insert(int)
+2) display()
+3) remove()
+*/
+public class Heap {
     
     int[] values = new int[100];
     int counter=0;
@@ -28,7 +34,7 @@ public class ImplementHeap {
         return (index-1)/2;
     }
 
-	public void displayArray() {
+	public void display() {
         for(int i=0;i<counter;i++){
             System.out.print(values[i]+" ");
         }
