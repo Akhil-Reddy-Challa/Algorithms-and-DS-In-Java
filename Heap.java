@@ -73,6 +73,10 @@ public class Heap {
         */
         if(counter == 0) //If heap is empty
             throw new IllegalStateException();
+        
+        //Before any operation Print the value that is going to be deleted
+        System.out.println(values[0]);//Now game starts
+        
         //Now replace the root with last element
         values[0] = values[--counter];
         //Now check if the childrens are balanced
