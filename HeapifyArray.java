@@ -11,18 +11,21 @@ public class HeapifyArray {
         }*/
         System.out.println(Arrays.toString(numbers));
         //Get kth largest in array using Heap
-        System.out.println(kthlargest(numbers,6));
+        System.out.println(kthlargest(numbers,1));
     }
 
     private static int kthlargest(int[] numbers, int k) {
+        if(k<=0 || k>=numbers.length)
+            throw new IllegalStateException();
         Heap heap = new Heap();
         for(var num: numbers)
             heap.insert(num);
         int highestNumber=0;
         while(k>0){
-            highestNumber = heap.remove();
+            heap.remove();
             k--;
         }
+        highestNumber = heap.getMax();
         return highestNumber;
     }
 

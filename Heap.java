@@ -66,7 +66,7 @@ public class Heap {
         return 2*index + 1;
     }
 
-	public int remove() {
+	public void remove() {
         /* Goal: Removing the root(Highest Integer) node and make 2nd Highest int as the root
         1) First Pop the last element and place it as Root
         2) Then write a logic to check if heap is balanced or not
@@ -75,8 +75,8 @@ public class Heap {
             throw new IllegalStateException();
         
         //Before any operation, Print the value that is going to be deleted
-        //System.out.println(values[0]);//Now game starts
-        int deleted_root = values[0];
+        //System.out.println(values[0]);
+        //Now game starts
 
         //Now replace the root with last element
         values[0] = values[--counter];
@@ -91,7 +91,7 @@ public class Heap {
             swap(index, largerChildIndex);
             index = largerChildIndex;
         }
-        return deleted_root;//So that this can be used by anyother java Program
+        
 	}
 
     private int getLargerChildIndex(int index) {
@@ -131,6 +131,11 @@ public class Heap {
     private boolean hasLeftChild(int index) {
         return (leftChildIndex(index) < counter) ? true : false;
     }
+
+	public int getMax() {
+        //Returns root node of a tree
+        return values[0];
+	}
 
 
 }
