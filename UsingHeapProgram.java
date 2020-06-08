@@ -6,11 +6,9 @@ public class UsingHeapProgram {
         Heap heap = new Heap();
         for(var number:array)
             heap.insert(number);
-        //heap.display();
-        for(var number:array){
+        for(var number:array)
             heap.remove();
-            //heap.display();
-        }
+        
             
     }
 }

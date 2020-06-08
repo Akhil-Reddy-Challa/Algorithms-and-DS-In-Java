@@ -1,6 +1,6 @@
 /*
-To use this Heap
-Create an Heap object in a java file
+To use this Heap Class
+Create an object in a java file
 Usable/Public methods:
 1) insert(int)
 2) display()
