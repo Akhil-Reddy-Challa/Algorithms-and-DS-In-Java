@@ -1,3 +1,4 @@
+import java.util.Arrays;
 import java.util.HashMap;
 
 public class Tries {
@@ -90,23 +91,28 @@ Hence replacing array in Node class with HashMap
 
 	public void removeWord(String word) {
         //var current = r
-        //if(!containsWord(word)) return;
-        root = deleteWord(root,word.toCharArray(),0);
+        if(!containsWord(word)) System.out.println("Word doen't exist");
+        else
+        deleteWord(root,word.toCharArray(),0);
 
 	}
 
     private Node deleteWord(Node root, char[] word, int index) {
-    
-        Node last_root=null;
-        if(index<word.length && root.hasChild(word[index])){
-            last_root = deleteWord(root.getChild(word[index]), word, index+1);
-            System.out.println(last_root.value);
-            if(last_root.isEndOfWord){
-                if(last_root.children.size() == 0)
-                    last_root.isEndOfWord = false;
-            }
+        if(index == word.length){
+            System.out.println("INSIDE IF: Index is: "+index+" Value is: "+root.value);
+            //root.isEndOfWord = false;
         }
-        return last_root;
+        //Node last_node;
+        else if(root.hasChild(word[index])){
+            System.out.println("Index is: "+index+" Value is: "+root.value);
+            var temp_root = deleteWord(root.getChild(word[index]), word, index+1);
+            System.out.println(temp_root.value+" "+temp_root.isEndOfWord+" "+temp_root.children.size());
+
+            if(temp_root.isEndOfWord) temp_root.isEndOfWord = false;
+            if(temp_root.children.size() == 0)
+                temp_root.children.clear();
+        }
+        return root;
     }
 
              

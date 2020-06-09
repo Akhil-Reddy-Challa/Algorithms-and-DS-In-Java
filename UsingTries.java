@@ -2,10 +2,14 @@
 public class UsingTries {
     public static void main(String[] args) {
         Tries trie = new Tries();
-        trie.insert("car");
         trie.insert("care");
-        //System.out.println(trie.containsWord(null));
-        //trie.traverse();
+        trie.insert("car");
+
         trie.removeWord("care");
+
+        System.out.println(trie.containsWord("car"));
+        System.out.println(trie.containsWord("care"));
+        
+        //trie.traverse();
     }
 }
