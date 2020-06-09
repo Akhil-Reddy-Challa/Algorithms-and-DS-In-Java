@@ -68,11 +68,11 @@ Hence replacing array in Node class with HashMap
     }
 
 	private void traverse(Node root) {
-        System.out.println(root.value);
-        //Now get all the childrens from the Node
-        for(var child:root.getChildrens()){
+        
+        for(var child:root.getChildrens())
             traverse(child);
-        }
+        
+        System.out.println(root.value);
     }
 
     public boolean containsWord(String word) {
@@ -87,4 +87,27 @@ Hence replacing array in Node class with HashMap
         }
         return current.isEndOfWord;
 	}
-}
+
+	public void removeWord(String word) {
+        //var current = r
+        //if(!containsWord(word)) return;
+        root = deleteWord(root,word.toCharArray(),0);
+
+	}
+
+    private Node deleteWord(Node root, char[] word, int index) {
+    
+        Node last_root=null;
+        if(index<word.length && root.hasChild(word[index])){
+            last_root = deleteWord(root.getChild(word[index]), word, index+1);
+            System.out.println(last_root.value);
+            if(last_root.isEndOfWord){
+                if(last_root.children.size() == 0)
+                    last_root.isEndOfWord = false;
+            }
+        }
+        return last_root;
+    }
+
+             
+    }
