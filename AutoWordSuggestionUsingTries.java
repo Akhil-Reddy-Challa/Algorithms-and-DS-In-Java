@@ -6,7 +6,7 @@ public class AutoWordSuggestionUsingTries {
         trie.insert("care");
         trie.insert("careful");
         trie.insert("egg");
-        String user_input = "car";
-        trie.generateWordSuggestion(user_input);
+        System.out.println(
+            trie.generateWordSuggestion("a"));
     }
 }

@@ -1,4 +1,7 @@
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 
 public class Tries {
     private class Node{
@@ -117,20 +120,36 @@ Hence replacing array in Node class with HashMap
         return current_root;
     }
 
-	public void generateWordSuggestion(String user_input) {
-        generateWordSuggestion(user_input,root);
+	public List<String> generateWordSuggestion(String user_input) {
+        List<String> words = new ArrayList<>();//For storing all the words
+        var lastNode_of_user_input = getLastNodeOf(root,user_input);
+        //Now get the last letter's address of the user_input;
+        //From the last_letter we should scan the remaining words;
+        if(lastNode_of_user_input == null) return null;//If there is no such word
+        else 
+            fetchWords(lastNode_of_user_input,user_input,words);
+        
+        return words;
 	}
-    String word="";
-    private void generateWordSuggestion(String input,Node temp_root) {
-        
-        for(var child:temp_root.getChildrens())
-            traverse(child);
-        
-        word += temp_root.value;
-        if(input == word) System.out.println("Yo");
-        else System.out.println(temp_root.value);
-       
+
+    private void fetchWords(Node root, String user_input, List<String> words) {
+        if(root.isEndOfWord)//If the current node is endOfWord add it to list
+            words.add(user_input);
+        for(var children:root.getChildrens())
+        //Now to get the reamining words, traverse the trie, so loop through the root childrens
+            fetchWords(children, user_input+children.value, words);
+            //We should get new word everytime, hence we aggregate current_root_char to the user_input
     }
 
-             
+    private Node getLastNodeOf(Node temp_root, String user_input) {
+        if(user_input == null) return null;//If input is null
+        for(var letter:user_input.toCharArray()){
+        //Iterate through the input word by word 
+            if(temp_root.hasChild(letter))
+                temp_root = temp_root.getChild(letter);//Find the last character
+            else return null;//If input is not in the trie
+        }
+        return temp_root;//Return's the node which has the last char of input
+    }
+        
     }
