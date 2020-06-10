@@ -1,4 +1,3 @@
-import java.util.Arrays;
 import java.util.HashMap;
 
 public class Tries {
@@ -90,29 +89,34 @@ Hence replacing array in Node class with HashMap
 	}
 
 	public void removeWord(String word) {
-        //var current = r
+        endOfWordIsDisabled = false;
         if(!containsWord(word)) System.out.println("Word doen't exist");
         else
-        deleteWord(root,word.toCharArray(),0);
+        root = deleteWord(root,word.toCharArray(),0);
 
 	}
 
-    private Node deleteWord(Node root, char[] word, int index) {
-        if(index == word.length){
-            System.out.println("INSIDE IF: Index is: "+index+" Value is: "+root.value);
-            //root.isEndOfWord = false;
-        }
-        //Node last_node;
-        else if(root.hasChild(word[index])){
-            System.out.println("Index is: "+index+" Value is: "+root.value);
-            var temp_root = deleteWord(root.getChild(word[index]), word, index+1);
-            System.out.println(temp_root.value+" "+temp_root.isEndOfWord+" "+temp_root.children.size());
+    boolean endOfWordIsDisabled = false;
+    boolean permitToDelete = false;
+    char storedCharacter;
+    private Node deleteWord(Node current_root, char[] word, int index) {
 
-            if(temp_root.isEndOfWord) temp_root.isEndOfWord = false;
-            if(temp_root.children.size() == 0)
-                temp_root.children.clear();
+        if(index < word.length && current_root.hasChild(word[index])){
+            var previous_root = deleteWord(current_root.getChild(word[index]), word, index+1);
+            
+            //Now we have two nodes, 1) Pointing to current node (2)  Pointing to previous node
+            if(previous_root.isEndOfWord && !endOfWordIsDisabled){//Now we have reached end of word, so mark the endOfWord flag to false
+                previous_root.isEndOfWord = false;
+                endOfWordIsDisabled = true;//We set this true because we only have to mark the deleteingWord's endOfWord as false
+            }
+            if(previous_root.children.size() == 0 && endOfWordIsDisabled){//After flagging endofWord, if the letter is Orphan(No childs) we have to delete that;
+                if(!previous_root.isEndOfWord){//To make sure we are not deleting another Words endOfWord;
+                    current_root.children.remove(previous_root.value);
+                } 
+            }
         }
-        return root;
+        
+        return current_root;
     }
 
              
