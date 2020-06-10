@@ -97,8 +97,6 @@ Hence replacing array in Node class with HashMap
 	}
 
     boolean endOfWordIsDisabled = false;
-    boolean permitToDelete = false;
-    char storedCharacter;
     private Node deleteWord(Node current_root, char[] word, int index) {
 
         if(index < word.length && current_root.hasChild(word[index])){
@@ -117,6 +115,21 @@ Hence replacing array in Node class with HashMap
         }
         
         return current_root;
+    }
+
+	public void generateWordSuggestion(String user_input) {
+        generateWordSuggestion(user_input,root);
+	}
+    String word="";
+    private void generateWordSuggestion(String input,Node temp_root) {
+        
+        for(var child:temp_root.getChildrens())
+            traverse(child);
+        
+        word += temp_root.value;
+        if(input == word) System.out.println("Yo");
+        else System.out.println(temp_root.value);
+       
     }
 
              
