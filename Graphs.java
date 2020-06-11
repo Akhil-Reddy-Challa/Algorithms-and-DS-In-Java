@@ -81,7 +81,6 @@ public class Graphs {
         if(node_address != null)
             traverseDFS(nodes.get(node),new HashSet<String>());
 	}
-
     private void traverseDFS(Node node, HashSet<String> alreadyTravelled) {
         System.out.println(node.label);
         var connectionsOfNode = adjacencyList.get(node);
@@ -92,5 +91,73 @@ public class Graphs {
                 traverseDFS(connection, alreadyTravelled);//Now start recursing with the Node
             
         }
+    }
+	public void traverseBFS(String node) {
+        var node_address = nodes.get(node);
+        if(node_address == null)
+            return;
+        HashSet<String> visitedNodes = new HashSet<>();
+        visitedNodes.add(node);
+        Queue<Node> queue = new ArrayDeque<>();
+        queue.add(node_address);
+        while(!queue.isEmpty()) {
+            var current_node = queue.remove();
+            System.out.println(current_node.label);
+            //Get connections of current_node
+            for(var connection:adjacencyList.get(current_node)){
+                if(!visitedNodes.contains(connection.label)){//If not present add
+                    visitedNodes.add(connection.label);
+                    //Now add it stack
+                    queue.add(connection);
+                }
+            }
+        }
+	}
+	public void topologicalSort() {
+    Stack<Node> stack = new Stack<>();
+    HashSet<Node> visitedNodes = new HashSet<>();
+    for(var node: nodes.values())
+        topologicalSort(node,stack,visitedNodes);
+    
+    System.out.println(stack);
+    System.out.println(visitedNodes);
+    }
+    private void topologicalSort(Node node, Stack<Node> stack, HashSet<Node> visitedNodes) {
+        
+        if(visitedNodes.contains(node))
+            return;
+        visitedNodes.add(node);
+        for(var connection:adjacencyList.get(node))
+            topologicalSort(connection,stack,visitedNodes);
+        
+        stack.push(node);
+    }
+	public boolean hasCycle() {
+        HashSet<Node> allNodes = new HashSet<>();
+        allNodes.addAll(nodes.values());
+        HashSet<Node> visiting = new HashSet<>();
+        HashSet<Node> visited = new HashSet<>();
+        while(!allNodes.isEmpty()){
+            var current = allNodes.iterator().next();
+            if(hasCycle(current,allNodes,visiting,visited))
+                return true;
+        }
+        return false;
+    }
+
+    private boolean hasCycle(Node current, HashSet<Node> allNodes, HashSet<Node> visiting, HashSet<Node> visited) {
+        allNodes.remove(current);
+        visiting.add(current);
+        for(var neighbour:adjacencyList.get(current)){
+            if(visited.contains(neighbour))
+                continue;
+            if(visiting.contains(current))
+                return true;
+            if(hasCycle(neighbour,allNodes,visiting,visited));
+                return true;
+        }
+        visiting.remove(current);
+        visited.add(current);
+        return false;
     }
 }

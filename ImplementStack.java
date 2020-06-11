@@ -1,6 +1,6 @@
 public class ImplementStack {
     public static void main(String[] args) {
-        Stack stack = new Stack();
+        Stacks stack = new Stacks();
         stack.push(10);
         stack.push(20);
         stack.push(30);

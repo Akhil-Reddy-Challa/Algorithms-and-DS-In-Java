@@ -1,4 +1,4 @@
-public class Stack {
+public class Stacks {
 
     private int[] storage = new int[100];
     private int top=-1;
