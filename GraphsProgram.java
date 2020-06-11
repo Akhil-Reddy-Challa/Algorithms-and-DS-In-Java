@@ -4,16 +4,12 @@ public class GraphsProgram {
         graph.addNode("A");
         graph.addNode("B");
         graph.addNode("C");
+        graph.addNode("D");
         graph.addEdge("A", "B");
-        graph.addEdge("B", "C");
-        graph.addEdge("C", "A");
-        //graph.print();
-        //graph.removeEdge("A","C");
-        //System.out.println();
+        graph.addEdge("A", "C");
+        graph.addEdge("B", "D");
+        graph.addEdge("D", "C");
         graph.print();
-        graph.removeNode("A");
-        graph.print();
-        graph.removeNode("C");
-        graph.print();
+        graph.traverseDFS("mA");
     }
 }

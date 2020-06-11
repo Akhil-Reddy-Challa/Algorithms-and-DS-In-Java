@@ -1,7 +1,4 @@
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class Graphs {
     private class Node{
@@ -35,6 +32,8 @@ public class Graphs {
             var targets = adjacencyList.get(source);
             if(!targets.isEmpty())
                 System.out.println(source+" is connected to "+targets);
+            else
+                System.out.println(source+" has NO Connections");
         }
     }
 	public void removeEdge(String from, String to) {
@@ -76,5 +75,22 @@ public class Graphs {
         }
         
 
-	}      
+	}
+	public void traverseDFS(String node) {
+        var node_address = nodes.get(node);
+        if(node_address != null)
+            traverseDFS(nodes.get(node),new HashSet<String>());
+	}
+
+    private void traverseDFS(Node node, HashSet<String> alreadyTravelled) {
+        System.out.println(node.label);
+        var connectionsOfNode = adjacencyList.get(node);
+        alreadyTravelled.add(node.label);//Even if the string exists it doesn't return exception
+        for(var connection:connectionsOfNode){
+            //Check if connection is in alreadyTravelled Set
+            if(!alreadyTravelled.contains(connection.label))//if no, recurse and the node will be added look at 2nd line of this function
+                traverseDFS(connection, alreadyTravelled);//Now start recursing with the Node
+            
+        }
+    }
 }
