@@ -6,6 +6,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "CodeLens (Launch) - UsingWeightedGraphs",
+            "request": "launch",
+            "mainClass": "UsingWeightedGraphs",
+            "projectName": "Algorithms-and-DS-In-Java_5cb778b5"
+        },
+        {
+            "type": "java",
             "name": "Debug (Launch) - Current File",
             "request": "launch",
             "mainClass": "${file}"

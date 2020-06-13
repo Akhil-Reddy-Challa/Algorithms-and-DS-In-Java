@@ -1,5 +1,4 @@
 public class First {
-
     public static void main(String[] args) {
         Array numbers =new Array(3);
         numbers.insert(10);
