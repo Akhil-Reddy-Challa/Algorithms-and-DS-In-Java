@@ -59,7 +59,6 @@ public class WeightedGraphs {
     public void print() {
         for (var node : nodes.values()) {
             var edges = node.getEdges();
-            if (!edges.isEmpty())
                 System.out.println(node + " Connections are: " + edges);
          }
     }
