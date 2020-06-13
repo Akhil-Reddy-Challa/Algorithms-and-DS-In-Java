@@ -29,6 +29,7 @@ public class HeapifyArray {
         return highestNumber;
     }
 
+   /*
     private static void heapify(int[] numbers, int position, int length) {
         
             int highIndex = position;//Assume parent is highest
@@ -52,4 +53,5 @@ public class HeapifyArray {
         numbers[i] = numbers[j];
         numbers[j] = temp;
     }
+    */
 }

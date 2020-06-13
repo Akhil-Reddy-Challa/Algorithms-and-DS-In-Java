@@ -6,8 +6,8 @@ public class UsingHeapProgram {
         Heap heap = new Heap();
         for(var number:array)
             heap.insert(number);
-        for(var number:array)
-            heap.remove();
+        //for(var number:array)
+            //heap.remove();
         
             
     }
