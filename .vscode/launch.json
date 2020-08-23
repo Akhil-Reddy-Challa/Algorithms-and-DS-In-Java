@@ -6,6 +6,27 @@
     "configurations": [
         {
             "type": "java",
+            "name": "CodeLens (Launch) - MinHeap",
+            "request": "launch",
+            "mainClass": "MinHeap",
+            "projectName": "Algorithms-and-DS-In-Java_b4dfd041"
+        },
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - MaxHeap",
+            "request": "launch",
+            "mainClass": "MaxHeap",
+            "projectName": "Algorithms-and-DS-In-Java_b4dfd041"
+        },
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - UsingHeapProgram",
+            "request": "launch",
+            "mainClass": "UsingHeapProgram",
+            "projectName": "Algorithms-and-DS-In-Java_b4dfd041"
+        },
+        {
+            "type": "java",
             "name": "CodeLens (Launch) - UsingWeightedGraphs",
             "request": "launch",
             "mainClass": "UsingWeightedGraphs",
