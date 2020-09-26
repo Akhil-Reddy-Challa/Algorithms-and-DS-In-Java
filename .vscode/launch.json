@@ -6,6 +6,20 @@
     "configurations": [
         {
             "type": "java",
+            "name": "CodeLens (Launch) - TimSort",
+            "request": "launch",
+            "mainClass": "TimSort",
+            "projectName": "Algorithms-and-DS-In-Java_b4dfd041"
+        },
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - MergeSort",
+            "request": "launch",
+            "mainClass": "MergeSort",
+            "projectName": "Algorithms-and-DS-In-Java_b4dfd041"
+        },
+        {
+            "type": "java",
             "name": "CodeLens (Launch) - MinHeap",
             "request": "launch",
             "mainClass": "MinHeap",
