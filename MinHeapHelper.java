@@ -8,13 +8,19 @@ Usable/Public methods:
 */
 public class MinHeapHelper {
 
-    int[] values = new int[100];
-    int counter = 0;
-    int root = values[0];
+    private int[] values = new int[100];
+    private int counter = 0;
 
     public void insert(int data) {
+        if (heapIsFull())
+            throw new IllegalStateException("Heap is full");
         values[counter++] = data;
+        // Adjust the element's position
         bubbleUp();
+    }
+
+    private boolean heapIsFull() {
+        return values.length == counter;
     }
 
     private void bubbleUp() {
@@ -82,25 +88,34 @@ public class MinHeapHelper {
         int index = 0;
         while (index < counter && !ifParentIsValid(index)) {
             // Swapping time
-            // We now know that some child has less value than root
-            int largerChildIndex = getSmallerChildIndex(index);
+            // We now know that some child has less value than root.
+            // Find it
+            int smallerChildIndex = getSmallerChildIndex(index);
             // We have large child value
             // Swap them
-            swap(index, largerChildIndex);
-            index = largerChildIndex;
+            swap(index, smallerChildIndex);
+            index = smallerChildIndex;
         }
 
     }
 
     private int getSmallerChildIndex(int index) {
-        int highIndex = counter;
-        if (hasLeftChild(index) && values[leftChildIndex(index)] < values[index])
-            highIndex = leftChildIndex(index);// Don't return yet, because right child might be much lesser than left
-        if (hasRightChild(index) && values[rightChildIndex(index)] < values[index]
-                && values[rightChildIndex(index)] < values[leftChildIndex(index)])
-            highIndex = rightChildIndex(index);// Because we compared right child value with left value
 
-        return highIndex;
+        if (!hasLeftChild(index))
+            return index;
+
+        if (!hasRightChild(index))
+            // We return leftChildIndex because of the logic check in
+            // method(ifParentIsValid)
+            // i.e Parent is invalid if children have less value than root
+            // If we have no right child then left should be greater than root
+            // else we would not have entered the while loop in method(remove)
+            return leftChildIndex(index);
+
+        var leftChildValue = values[leftChildIndex(index)];
+        var rightChildValue = values[rightChildIndex(index)];
+
+        return rightChildValue > leftChildValue ? leftChildIndex(index) : rightChildIndex(index);
     }
 
     private boolean ifParentIsValid(int index) {
@@ -114,7 +129,7 @@ public class MinHeapHelper {
             return false;
 
         /*
-         * At this point either right,left child are greater than root
+         * At this point either right,left child are greater than root(So need to swap)
          */
         return true;
 

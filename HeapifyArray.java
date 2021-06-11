@@ -15,7 +15,7 @@ public class HeapifyArray {
 
     private static int kthlargest(int[] numbers, int k) {
         if (k <= 0 || k >= numbers.length)
-            throw new IllegalStateException();
+            throw new IllegalArgumentException();
         var heap = new MaxHeapHelper();
         for (var num : numbers)
             heap.insert(num);

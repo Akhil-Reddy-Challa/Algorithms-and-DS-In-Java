@@ -6,6 +6,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "Launch MinHeap",
+            "request": "launch",
+            "mainClass": "MinHeap",
+            "projectName": "Algorithms-and-DS-In-Java_a0450f85"
+        },
+        {
+            "type": "java",
             "name": "CodeLens (Launch) - TimSort",
             "request": "launch",
             "mainClass": "TimSort",
