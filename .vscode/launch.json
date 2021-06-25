@@ -6,6 +6,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "Launch TestingAbove",
+            "request": "launch",
+            "mainClass": "TestingAbove",
+            "projectName": "Algorithms-and-DS-In-Java_74ea91cf"
+        },
+        {
+            "type": "java",
             "name": "Launch MinHeap",
             "request": "launch",
             "mainClass": "MinHeap",
