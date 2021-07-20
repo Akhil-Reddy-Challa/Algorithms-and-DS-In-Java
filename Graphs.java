@@ -1,6 +1,15 @@
 import java.util.*;
 
 public class Graphs {
+
+    private final Map<String, Node> nodes;
+    private final Map<Node, List<Node>> neighbours;
+
+    Graphs() {
+        nodes = new HashMap<>();
+        neighbours = new HashMap<>();
+    }
+
     private class Node {
         String label;
 
@@ -14,32 +23,29 @@ public class Graphs {
         }
     }
 
-    Map<String, Node> nodes = new HashMap<>();
-    Map<Node, List<Node>> adjacencyList = new HashMap<>();
-
     public void addNode(String label) {
-        var new_node = new Node(label);
-        nodes.putIfAbsent(label, new_node);
-        adjacencyList.putIfAbsent(new_node, new ArrayList<>());
+        var newNode = new Node(label);
+        nodes.putIfAbsent(label, newNode);
+        neighbours.putIfAbsent(newNode, new ArrayList<>());
     }
 
     public void addEdge(String from, String to) {
-        var from_node = nodes.get(from);
-        if (from_node == null)
-            throw new IllegalArgumentException();
-        var to_node = nodes.get(to);
-        if (to_node == null)
-            throw new IllegalArgumentException();
-        adjacencyList.get(from_node).add(to_node);
+        var fromNode = nodes.get(from);
+        if (fromNode == null)
+            throw new IllegalArgumentException("Node(" + from + ") doesn't exist");
+        var toNode = nodes.get(to);
+        if (toNode == null)
+            throw new IllegalArgumentException("Node(" + to + ") doesn't exist");
+        neighbours.get(fromNode).add(toNode);
     }
 
     public void print() {
-        for (var source : adjacencyList.keySet()) {
-            var targets = adjacencyList.get(source);
-            if (!targets.isEmpty())
-                System.out.println(source + " is connected to " + targets);
-            else
+        for (var source : neighbours.keySet()) {
+            var targets = neighbours.get(source);
+            if (targets.isEmpty())
                 System.out.println(source + " has NO Connections");
+            else
+                System.out.println(source + " -> " + targets);
         }
     }
 
@@ -51,56 +57,44 @@ public class Graphs {
         if (to_node == null)
             throw new IllegalArgumentException();
         // Now see if they are having a Edge
-        var check = adjacencyList.get(from_node).contains(to_node);// Check if the Node as any edge
-        if (check)// If check is true then there is connection
-            adjacencyList.get(from_node).remove(to_node);// Now we deleted the connection
+        var hasEdge = neighbours.get(from_node).contains(to_node);// Check if the Node as any edge
+        if (hasEdge)// If check is true then there is connection
+            neighbours.get(from_node).remove(to_node);// Now we deleted the connection
         else // No connection is there
-            System.out.println("No connection exists between" + from + " and " + to);
+            System.out.println("No connection exists between " + from + " and " + to);
     }
 
     public void removeNode(String member) {
         // First check if the Node exists;
         if (!nodes.containsKey(member))
             throw new IllegalArgumentException();
-        // Now we have confirmation that memeber exists.
-        // 1) Delete the Node(member) from the adjacencyList
-        var member_address = nodes.get(member);
-        adjacencyList.remove(member_address);
-        // Now we should loop thorugh adjacencyList to find if any Node as any
-        // connection with our memeber
-        for (var node : adjacencyList.keySet()) {
-            // We have all the Node & List<Connections>
-            // Loop through List
-            for (var connections : adjacencyList.get(node)) {
-                if (connections.label == member) {// We only need this if List<> has member to delete
-                    System.out.println(node.label + " is connected to: " + member);
-                    adjacencyList.get(node).remove(member_address);
-                    // We shouldn't delete element of List while looping through it
-                    // Hence we break out of the loop
-                    System.out.println("I am deleted");
-                    break;
-                }
+        var nodeToDelete = nodes.get(member);
+        // Delete all the incoming connections
+        for (var node : neighbours.keySet()) {
+            var connections = neighbours.get(node);
+            if (connections.contains(nodeToDelete)) {
+                connections.remove(nodeToDelete);
             }
         }
-
+        // Remove from list table
+        neighbours.remove(nodeToDelete);
     }
 
-    public void traverseDFS(String node) {
-        var node_address = nodes.get(node);
+    public void traverseDFS(String startNode) {
+        var node_address = nodes.get(startNode);
         if (node_address != null)
-            traverseDFS(nodes.get(node), new HashSet<String>());
+            traverseDFS(nodes.get(startNode), new HashSet<String>());
     }
 
-    private void traverseDFS(Node node, HashSet<String> alreadyTravelled) {
+    private void traverseDFS(Node node, HashSet<String> visited) {
         System.out.println(node.label);
-        var connectionsOfNode = adjacencyList.get(node);
-        alreadyTravelled.add(node.label);// Even if the string exists it doesn't return exception
-        for (var connection : connectionsOfNode) {
-            // Check if connection is in alreadyTravelled Set
-            if (!alreadyTravelled.contains(connection.label))// if no, recurse and the node will be added look at 2nd
-                                                             // line of this function
-                traverseDFS(connection, alreadyTravelled);// Now start recursing with the Node
-
+        var connections = neighbours.get(node);
+        visited.add(node.label);// Even if the string exists it doesn't return exception
+        for (var connection : connections) {
+            // Check if connection is visited
+            var isVisited = visited.contains(connection.label);
+            if (!isVisited)
+                traverseDFS(connection, visited);// Now start recursing with the Node
         }
     }
 
@@ -108,20 +102,21 @@ public class Graphs {
         var node_address = nodes.get(node);
         if (node_address == null)
             return;
-        HashSet<String> visitedNodes = new HashSet<>();
-        visitedNodes.add(node);
-        Queue<Node> queue = new ArrayDeque<>();
+        var visited = new HashSet<String>();
+        visited.add(node);
+        var queue = new ArrayDeque<Node>();
         queue.add(node_address);
         while (!queue.isEmpty()) {
-            var current_node = queue.remove();
+            var current_node = queue.poll();
             System.out.println(current_node.label);
             // Get connections of current_node
-            for (var connection : adjacencyList.get(current_node)) {
-                if (!visitedNodes.contains(connection.label)) {// If not present add
-                    visitedNodes.add(connection.label);
+            for (var connection : neighbours.get(current_node)) {
+                var notVisited = visited.add(connection.label);
+                if (notVisited) {
                     // Now add it stack
                     queue.add(connection);
                 }
+
             }
         }
     }
@@ -141,17 +136,17 @@ public class Graphs {
         if (visitedNodes.contains(node))
             return;
         visitedNodes.add(node);
-        for (var connection : adjacencyList.get(node))
+        for (var connection : neighbours.get(node))
             topologicalSort(connection, stack, visitedNodes);
 
         stack.push(node);
     }
 
     public boolean hasCycle() {
-        HashSet<Node> allNodes = new HashSet<>();
+        var allNodes = new HashSet<Node>();
         allNodes.addAll(nodes.values());
-        HashSet<Node> visiting = new HashSet<>();
-        HashSet<Node> visited = new HashSet<>();
+        var visiting = new HashSet<Node>();
+        var visited = new HashSet<Node>();
         while (!allNodes.isEmpty()) {
             var current = allNodes.iterator().next();
             if (hasCycle(current, allNodes, visiting, visited))
@@ -163,7 +158,7 @@ public class Graphs {
     private boolean hasCycle(Node current, HashSet<Node> allNodes, HashSet<Node> visiting, HashSet<Node> visited) {
         allNodes.remove(current);
         visiting.add(current);
-        for (var neighbour : adjacencyList.get(current)) {
+        for (var neighbour : neighbours.get(current)) {
             if (visited.contains(neighbour))
                 continue;
             if (visiting.contains(current))
@@ -176,4 +171,29 @@ public class Graphs {
         visited.add(current);
         return false;
     }
+
+    public boolean pathExists(String start, String destination) {
+        var startNode = nodes.get(start);
+        var destinationNode = nodes.get(destination);
+        if (startNode == null || destinationNode == null)
+            throw new IllegalArgumentException();
+
+        var visited = new HashSet<String>();
+        var queue = new ArrayDeque<Node>();
+        queue.add(startNode);
+        while (!queue.isEmpty()) {
+            var current = queue.poll();
+            var connections = neighbours.get(current);
+            for (var connection : connections) {
+                if (connection == destinationNode) {
+                    return true;
+                }
+                if (visited.add(connection.label)) {
+                    queue.add(connection);
+                }
+            }
+        }
+        return false;
+    }
+
 }
