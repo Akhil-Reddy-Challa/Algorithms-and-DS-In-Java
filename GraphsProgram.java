@@ -5,14 +5,17 @@ public class GraphsProgram {
         graph.addNode("A");
         graph.addNode("B");
         graph.addNode("C");
-        //graph.addEdge("A", "B");
-        //graph.addEdge("B", "C");
-        graph.addEdge("A", "C");
-        //graph.addEdge("D", "A");
-        //graph.print();
-        //graph.traverseDFS("A");
-        //graph.traverseBFS("A");
-        //graph.topologicalSort();
-        System.out.println(graph.hasCycle());
+
+        graph.addEdge("A", "B");
+        graph.addEdge("B", "C");
+        graph.addEdge("D", "A");
+        graph.addEdge("D", "B");
+        graph.addEdge("A", "D");
+        graph.addEdge("C", "D");
+
+        // graph.print();
+        // Find if path exists
+        System.out.println(graph.pathExists("A", "C"));
+
     }
 }
